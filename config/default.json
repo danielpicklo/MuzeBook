@@ -1,3 +1,4 @@
 {
-    "mongoURI": "mongodb+srv://admin:55Q2PFW4hgfFLCbH@cluster0.r6nmp.mongodb.net/<dbname>?retryWrites=true&w=majority"
+    "mongoURI": "mongodb+srv://admin:55Q2PFW4hgfFLCbH@cluster0.r6nmp.mongodb.net/<dbname>?retryWrites=true&w=majority",
+    "tokensecret": "secret"
 }
