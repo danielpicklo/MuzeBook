@@ -12,7 +12,7 @@ router.post('/', [
         check('name', 'Name is required').not().isEmpty(),
         check('email', 'Email is required').isEmail(),
         check('password', 'Please enter a password with more than 8 characters').isLength({min:8})
-    ], async(req,res) => {
+    ], async function(req,res) {
 
     const errors = validationResult(req);
     const {name, email, password} = req.body;
@@ -53,7 +53,5 @@ router.post('/', [
         res.status(500).send('There is an issue with the server. Error Code 500');
     }
 });
-
-
 
 module.exports = router;
