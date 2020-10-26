@@ -18,7 +18,7 @@ router.get('/', VerifyToken, async(req,res) => {
 });
 
 router.post('/', [
-    check('name', 'Name is required').not().isEmpty(),
+    //check('name', 'Name is required').not().isEmpty(),
     check('email', 'Email is required').isEmail(),
     check('password', 'Password required').exists()
 ], async(req,res) => {
