@@ -1,9 +1,13 @@
 import React, {Fragment, useState} from 'react';
 import {connect} from 'react-redux';
 import {setAlert} from '../../actions/alert';
+import {register} from '../../actions/auth';
+import PropTypes from 'prop-types';
+import {Redirect} from 'react-router-dom';
+
 //import axios from 'axios';
 
-export const Register = (props) => {
+export const Register = ({setAlert, register, isAuthenticated}) => {
 
     const [formData, setFormData] = useState({
         name:'',
@@ -17,8 +21,10 @@ export const Register = (props) => {
     const onSubmit = async e => {
         e.preventDefault();
         if(password !== confirmpassword){
-            props.setAlert("Passwords do not match", 'danger');
+            setAlert("Passwords do not match. Please try again.", 'danger');
         }else{
+            register({name, email, password});
+
             /*const user = {
                 name,
                 email,
@@ -38,9 +44,11 @@ export const Register = (props) => {
             }catch(err){
                 console.error(err);
             }*/
-
-            console.log('User successfully created');
         }
+    }
+
+    if(isAuthenticated){
+        return <Redirect to="/dashboard" />
     }
 
     return (
@@ -50,10 +58,10 @@ export const Register = (props) => {
                 <h3>Please sign up to continue to the community</h3>
                 <div className="form">
                     <form onSubmit={e => onSubmit(e)}>
-                        <input type="text" name="name" placeholder="Name" value={name} onChange={e => onChange(e)} required/>
-                        <input type="email" name="email" placeholder="Email Address" value={email} onChange={e => onChange(e)} required/>
-                        <input type="password" name="password" placeholder="Password" value={password} onChange={e => onChange(e)} required/>
-                        <input type="password" name="confirmpassword" placeholder="Confirm Password" value={confirmpassword} onChange={e => onChange(e)} required/>
+                        <input type="text" name="name" placeholder="Name" value={name} onChange={e => onChange(e)} />
+                        <input type="email" name="email" placeholder="Email Address" value={email} onChange={e => onChange(e)} />
+                        <input type="password" name="password" placeholder="Password" value={password} onChange={e => onChange(e)} />
+                        <input type="password" name="confirmpassword" placeholder="Confirm Password" value={confirmpassword} onChange={e => onChange(e)} />
                         <input type="submit" vlaue="Register"/>
                     </form>
                 </div>
@@ -62,4 +70,14 @@ export const Register = (props) => {
     )
 }
 
-export default connect(null, {setAlert})(Register);
+Register.propTypes = {
+    setAlert: PropTypes.func.isRequired, 
+    register: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool
+};
+
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, {setAlert, register})(Register);
