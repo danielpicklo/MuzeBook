@@ -6,6 +6,8 @@ import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Sidebar from './components/layout/Sidebar';
 import Alert from './components/layout/Alert';
+import Dash from './components/dash/dash';
+import Private from './components/routing/private';
 import './App.css';
 import {Provider} from 'react-redux';
 import store from './store';
@@ -33,6 +35,7 @@ const App = () => {
             <Switch>
               <Route exact path="/login" component={Login}/>
               <Route exact path="/register" component={Register}/>
+              <Private exact path="/profile" component={Dash}/>
             </Switch>
           </div>
           <Sidebar />
