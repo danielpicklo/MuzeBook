@@ -8,6 +8,7 @@ export const Navbar = ({auth: {isAuthenticated, loading}, logout}) => {
     const authLinks = (
         <ul>
             <li><a onClick={logout} href="#!">Logout</a></li>
+            <li><Link to="/posts">Posts</Link></li>
         </ul>
     );
     const deauthLinks = (
@@ -20,7 +21,7 @@ export const Navbar = ({auth: {isAuthenticated, loading}, logout}) => {
     return (
         <nav className="navbar bg-dark">
             <div className="logo">
-                <a href="/"><img src="https://danpicklo.files.wordpress.com/2020/10/white-logo.png" alt="logo"/></a>
+                <Link to="/"><img src="https://danpicklo.files.wordpress.com/2020/10/white-logo.png" alt="logo"/></Link>
             </div>
             <div className="navigation">
                 <Fragment>{isAuthenticated ? authLinks : deauthLinks}</Fragment>

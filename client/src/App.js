@@ -5,6 +5,7 @@ import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Sidebar from './components/layout/Sidebar';
+import Posts from './components/posts/Posts';
 import Alert from './components/layout/Alert';
 import Dash from './components/dash/dash';
 import Private from './components/routing/private';
@@ -30,12 +31,13 @@ const App = () => {
         <Fragment>
           <Navbar />
           <div className="container">
-            <Route exact path="/" component={Landing}/>
             <Alert />
             <Switch>
+              <Route exact path="/" component={Landing}/>
               <Route exact path="/login" component={Login}/>
               <Route exact path="/register" component={Register}/>
               <Private exact path="/profile" component={Dash}/>
+              <Private exact path="/posts" component={Posts}/>
             </Switch>
           </div>
           <Sidebar />
