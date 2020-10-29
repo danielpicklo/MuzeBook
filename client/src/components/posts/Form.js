@@ -7,16 +7,19 @@ const Form = ({addPost}) => {
     const [text, setText] = useState('');
 
     return (
-        <div className="post-form">
-            <h4>Add Post</h4>
-            <form onSubmit={e => {
-                e.preventDefault();
-                addPost({text});
-                setText('');
-            }}>
-                <textarea name="post" cols="25" rows="2" placeholder="Text here" value={text} onChange={e => setText(e.target.value)} required></textarea>
-                <button>Share</button>
-            </form>
+        <div>
+            <div className="form">
+                <h4>Add Post</h4>
+                <form onSubmit={e => {
+                    e.preventDefault();
+                    addPost({text});
+                    setText('');
+                }}>
+                    <textarea name="post" cols="25" rows="2" placeholder="Text here" value={text} onChange={e => setText(e.target.value)} required></textarea>
+                    <button>Share</button>
+                </form>
+            </div>
+            <hr/>
         </div>
     )
 }

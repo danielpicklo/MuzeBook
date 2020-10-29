@@ -19,12 +19,14 @@ export const Navbar = ({auth: {isAuthenticated, loading}, logout}) => {
     );
 
     return (
-        <nav className="navbar bg-dark">
-            <div className="logo">
-                <Link to="/"><img src="https://danpicklo.files.wordpress.com/2020/10/white-logo.png" alt="logo"/></Link>
-            </div>
-            <div className="navigation">
-                <Fragment>{isAuthenticated ? authLinks : deauthLinks}</Fragment>
+        <nav className="navbar bg-white">
+            <div className="container-head">
+                <div className="logo">
+                    <Link to="/"><img src="https://danpicklo.files.wordpress.com/2020/09/cropped-standard-logo-e1599581963846-1.png" alt="logo"/></Link>
+                </div>
+                <div className="navigation">
+                    <Fragment>{isAuthenticated ? authLinks : deauthLinks}</Fragment>
+                </div>
             </div>
         </nav>
     )

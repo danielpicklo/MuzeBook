@@ -29,7 +29,7 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Fragment>
-          <Navbar />
+        <Navbar />
           <div className="container">
             <Alert />
             <Switch>
@@ -40,7 +40,7 @@ const App = () => {
               <Private exact path="/posts" component={Posts}/>
             </Switch>
           </div>
-          <Sidebar />
+          <div className="footer"></div>
         </Fragment>
       </Router>
     </Provider>

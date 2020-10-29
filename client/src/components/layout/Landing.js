@@ -1,11 +1,8 @@
-import React from 'react'
+import React, {Fragment, useState} from 'react';
+import { Redirect } from 'react-router-dom';
 
 export const Landing = () => {
-    return (
-        <div>
-            <h1>Welcome to MuzeBook</h1>
-        </div>
-    )
+    return <Redirect to="/register" />
 }
 
 export default Landing;

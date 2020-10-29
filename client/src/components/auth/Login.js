@@ -19,19 +19,19 @@ export const Login = ({login, isAuthenticated}) => {
     };
 
     if(isAuthenticated){
-        return <Redirect to="/profile" />
+        return <Redirect to="/posts" />
     }
 
     return (
         <Fragment>
             <div>
-                <h1>Welcome to MuzeBook</h1>
-                <h3>Please sign up to continue to the community</h3>
+                <h1 className="centered">Welcome to MuzeBook</h1>
+                <h3 className="centered">Please sign up to continue to the community</h3>
                 <div className="form">
                     <form onSubmit={e => onSubmit(e)}>
                         <input type="email" name="email" placeholder="Email Address" value={email} onChange={e => onChange(e)} required/>
                         <input type="password" name="password" placeholder="Password" value={password} onChange={e => onChange(e)} required/>
-                        <input type="submit" value="Register"/>
+                        <input type="submit" value="Log In"/>
                     </form>
                 </div>
             </div>
