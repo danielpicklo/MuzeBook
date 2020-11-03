@@ -96,7 +96,7 @@ router.get('/user/:user_id', async function(req,res){
     try {
         const profile = await Profile.findOne({user:req.params.user_id}).populate('user', ['name', 'avatar']);
         if(!profile){
-            return res.status(400).json({msg:"No profile"});
+            return res.status(404).json({msg:"No profile"});
         }
 
         res.json(profile);
@@ -104,6 +104,21 @@ router.get('/user/:user_id', async function(req,res){
         console.error(err.message);
     }
 });
+
+router.get('/me', VerifyToken, async function(req,res){
+    try {
+      const profile = await Profile.findOne({ user: req.user.id }).populate('user', ['name', 'avatar']);
+  
+      if (!profile) {
+        return res.status(400).json({ msg: 'There is no profile for this user' });
+      }
+  
+      res.json(profile);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  });
 
 router.delete('/', async function(req,res){
     try {
