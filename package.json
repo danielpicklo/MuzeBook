@@ -13,6 +13,7 @@
   "author": "Dan Picklo",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.21.0",
     "bcryptjs": "^2.4.3",
     "cat-me": "^1.0.3",
     "config": "^3.3.2",

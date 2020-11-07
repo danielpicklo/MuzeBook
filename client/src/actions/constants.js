@@ -21,3 +21,4 @@ export const ADD_POST = 'ADD_POST';
 //Profiles
 export const GET_PROFILE = 'GET_PROFILE';
 export const PROFILE_ERROR = 'PROFILE_ERROR';
+export const CLR_PROFILE = 'CLR_PROFILE';

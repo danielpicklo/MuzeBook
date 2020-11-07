@@ -6,19 +6,21 @@ import {connect} from 'react-redux';
 
 const Post = ({auth, post:{_id,text,name,avatar,user,loves,comments,date}}) => {
     return (
-        <div className="post">
-            <Link to=''><img className="profile-image" src={avatar}/></Link>
-            <h4>{name}</h4>
-            <div className="post-content">
-                <p>"{text}"</p>
+        <Fragment>
+            <div className="post">
+                <Link to=''><img className="profile-image" src={avatar} alt="profile-img"/></Link>
+                <h4>{name}</h4>
+                <div className="post-content">
+                    <p>"{text}"</p>
+                </div>
+                <div className="date">
+                    <p>Shared <Moment format="MM/DD/YYYY">{date}</Moment></p>
+                </div>
+                {!auth.loading && user === auth.user._id &&(
+                    <button>X</button>
+                )}
             </div>
-            <div className="date">
-                <p>Shared <Moment format="MM/DD/YYYY">{date}</Moment></p>
-            </div>
-            {!auth.loading && user === auth.user._id &&(
-                <button>X</button>
-            )}
-        </div>
+        </Fragment>
     )
 }
 

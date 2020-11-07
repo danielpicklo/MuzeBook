@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { post } from 'request';
 import {setAlert} from './alert';
 import {GET_POSTS, POST_ERROR, ADD_POST} from './constants';
 

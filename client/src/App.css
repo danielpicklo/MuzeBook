@@ -2,6 +2,8 @@ body{
     margin: 0px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: #202020;
+    background: url('https://danpicklo.files.wordpress.com/2020/11/5925e1459589f92598c1f906a5a79397.jpg');
+    background-size: cover;
 }
 
 h1{
@@ -23,7 +25,6 @@ a:hover {
     width: 70%;
     clear:both;
     margin: 0 auto;
-    background: #fff;
     min-height: 71vh;
 }
 

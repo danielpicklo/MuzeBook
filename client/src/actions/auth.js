@@ -1,7 +1,7 @@
 import axios from 'axios';
 import setAuthToken from '../utils/setAuthToken';
 import {setAlert} from './alert';
-import {REGISTER_SUCCESS, REGISTER_FAILURE, USER_LOAD, AUTH_ERR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_USER} from './constants';
+import {REGISTER_SUCCESS, REGISTER_FAILURE, USER_LOAD, AUTH_ERR, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT_USER, CLR_PROFILE} from './constants';
 
 export const loadUser = () => async dispatch => {
     if(localStorage.token){
@@ -64,5 +64,6 @@ export const login = ( email, password) => async dispatch => {
 };
 
 export const logout = () => dispatch => {
+    dispatch({type: CLR_PROFILE});
     dispatch({type: LOGOUT_USER});
 };

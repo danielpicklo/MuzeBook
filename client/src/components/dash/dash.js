@@ -1,26 +1,40 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, Fragment,} from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {getProfile} from '../../actions/profile';
+import {getCurrentProfile} from '../../actions/profile';
 import {connect} from 'react-redux';
 
-const Dash = ({getProfile, auth, profile}) => {
+const Dash = ({getCurrentProfile, auth: {user}, profile: {profile}}) => {
     useEffect(() => {
-        getProfile()
-    }, []);
+        getCurrentProfile();
+    }, [getCurrentProfile]);
 
     return (
-        <div>
-            Dashboard
-        </div>
+        <Fragment>
+           <h1>{user && user.name}</h1>
+           {profile !== null ? 
+                <Fragment>
+                    <p>Profile</p>
+                </Fragment> 
+                : 
+                <Fragment>
+                    <p>Do you want to set up your profile?</p>
+                    <Link to='/create-profile'><button>Create Profile</button></Link>
+                </Fragment>
+           }
+        </Fragment>
     )
 }
 
 Dash.propTypes = {
-    getProfile: PropTypes.func.isRequired,
+    getCurrentProfile: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired
-}
-
-const mapStateToProps = state => ({auth:state.auth, profile:state.profile});
- 
-export default connect(mapStateToProps, {getProfile})(Dash);
+};
+  
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+    profile: state.profile
+});
+  
+export default connect(mapStateToProps, {getCurrentProfile})(Dash);

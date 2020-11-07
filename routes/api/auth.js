@@ -7,71 +7,75 @@ const express   = require('express'),
 
 const User = require('../../models/User');
 
-router.get('/', VerifyToken, async(req,res) => {
+router.get('/', VerifyToken, async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select('-password');
-        res.json({user});
+      const user = await User.findById(req.user.id).select('-password');
+      res.json(user);
     } catch (err) {
-        console.error(err.message);
-        res.status(401).json({msg: 'Token cannot be verified.'})
+      console.error(err.message);
+      res.status(500).send('Server Error');
     }
-});
-
+  });
+  
 router.post('/', [
-    //check('name', 'Name is required').not().isEmpty(),
-    check('email', 'Email is required').isEmail(),
-    check('password', 'Password required').exists()
-], async(req,res) => {
-
-const errors = validationResult(req);
-const {email, password} = req.body;
-
-if(!errors.isEmpty()){
-    return res.status(400).json({errors: errors.array()});
-}
-
-try{
-    let user = await User.findOne({email});
-    if(!user){
-        res.status(400).json({errors:[{msg: 'Invalid Login Credentials'}]});
+    check('email', 'Please include a valid email').isEmail(),
+    check('password', 'Password is required').exists()
+  ], async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  
+  const { email, password } = req.body;
+  
+  try {
+    let user = await User.findOne({ email });
+  
+    if (!user) {
+      return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
     }
-
-    const match = await bcrypt.compare(password, user.password);
-
-    if(!match){
-        res.status(400).json({errors:[{msg: 'Invalid Login Credentials'}]});
+  
+    const isMatch = await bcrypt.compare(password, user.password);
+  
+    if (!isMatch) {
+        return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
     }
-
-    const pload = {
-        user:{
-            id: user.id
-        }
+  
+    const payload = {
+        user: {
+        id: user.id
+      }
     };
-
-    jwt.sign(pload, config.get('tokensecret'), function(err, token) {
+  
+    jwt.sign(payload, config.get('tokensecret'), function(err, token) {
         if(err) throw err;
         res.json({token});
     });
-}catch(err){
-    res.status(500).send('There is an issue with the server. Error Code 500');
-}
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
 });
 
 function VerifyToken(req,res,next){
-    const token = req.header('x-auth-token');
-
-    if(!token){
-        return res.status(401).json({msg: 'Token missing. Login authorization denied.'});
-    }
-
-    try {
-       const decoded = jwt.verify(token, config.get('tokensecret'));
-
-       req.user = decoded.user;
-       next();
-    } catch (error) {
-        res.status(401).json({msg: 'Invalid token'});
-    }
+  const token = req.header('x-auth-token');
+    
+  if (!token) {
+    return res.status(401).json({ msg: 'No token, authorization denied' });
+  }
+    
+  try {
+    jwt.verify(token, config.get('tokensecret'), (error, decoded) => {
+      if (error) {
+        return res.status(401).json({ msg: 'Token is not valid' });
+      } else {
+        req.user = decoded.user;
+        next();
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ msg: 'Server Error' });
+  }
 }
 
 module.exports = router;

@@ -4,10 +4,11 @@ import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
-import Sidebar from './components/layout/Sidebar';
+//import Sidebar from './components/layout/Sidebar';
+import CreateProfile from './components/profile-forms/CreateProfile';
 import Posts from './components/posts/Posts';
 import Alert from './components/layout/Alert';
-import Dash from './components/dash/dash';
+import Dash from './components/dash/Dash';
 import Private from './components/routing/private';
 import './App.css';
 import {Provider} from 'react-redux';
@@ -38,6 +39,7 @@ const App = () => {
               <Route exact path="/register" component={Register}/>
               <Private exact path="/profile" component={Dash}/>
               <Private exact path="/posts" component={Posts}/>
+              <Private exact path="/create-profile" component={CreateProfile}/>
             </Switch>
           </div>
           <div className="footer"></div>

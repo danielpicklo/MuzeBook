@@ -1,37 +1,42 @@
-const express   = require('express'),
-      router	= express.Router(),
-      config    = require('config'),
-      jwt       = require('jsonwebtoken'),
-      bcrypt    = require('bcryptjs'),
-      {check, validationResult} = require('express-validator/check');
+const   express     = require('express'),
+        axios       = require('axios'),
+        config      = require('config'),
+        router      = express.Router(),
+        { check, validationResult } = require('express-validator');
 
-//Models
 const   Profile = require('../../models/Profile'),
-        User    = require('../../models/User') ;
+        User    = require('../../models/User'),
+        Post    = require('../../models/Post');
 
-router.get('/user', VerifyToken, async function(req,res){
-    try{
-        const profile = await Profile.findOne({user:req.user.id}).populate('user', ['name','avatar']);
+const checkObjectId = (idToCheck) => (req, res, next) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params[idToCheck]))
+        return res.status(400).json({ msg: 'Invalid ID' });
+    next();
+};
 
-        if(!profile){
-            return res.status(400).json({msg: 'No profile'});
-        }
 
-        res.json(profile);
-    }catch(err){
-        console.error(err.message);
+router.get('/me', VerifyToken, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      user: req.user.id
+    }).populate('user', ['name', 'avatar']);
+
+    if (!profile) {
+      return res.status(400).json({ msg: 'There is no profile for this user' });
     }
+
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 });
 
-router.post('/', [VerifyToken, [
-    check('bio', 'A bio is required!').not().isEmpty(),
-    check('favoriteBands', 'Please include bands!').not().isEmpty()
-]], async function(req,res){
-    const err = validationResult(req);
-    if(!err.isEmpty()){
-        return res.status(400).json({errors: err.array});
+router.post('/', VerifyToken, async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
-
     const {
         bio,
         favoriteBands,
@@ -62,89 +67,86 @@ router.post('/', [VerifyToken, [
     if(appleMusic) fields.socials.appleMusic = appleMusic;
     if(facebook) fields.socials.facebook = facebook;
 
-    try{
-        let profile = await Profile.findOne({user: req.user.id});
-
-        if(profile){
-            profile = await Profile.findOneAndUpdate({user: req.user.id}, {$set: fields}, {new: true});
-
-            return res.json(profile);
-        }
-
-        profile = new Profile(fields);
-        await profile.save();
-        res.json(profile);
-    }catch(err){
-        console.error(err.message);
-        res.status(500).send('Server Errorss');
-    }
-
-    res.send('hello');
-});
-
-
-router.get('/', async function(req,res){
     try {
-        const profiles = await Profile.find().populate('user', ['name', 'avatar']);
-        res.json(profiles);
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-
-router.get('/user/:user_id', async function(req,res){
-    try {
-        const profile = await Profile.findOne({user:req.params.user_id}).populate('user', ['name', 'avatar']);
-        if(!profile){
-            return res.status(404).json({msg:"No profile"});
-        }
-
-        res.json(profile);
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-
-router.get('/me', VerifyToken, async function(req,res){
-    try {
-      const profile = await Profile.findOne({ user: req.user.id }).populate('user', ['name', 'avatar']);
-  
-      if (!profile) {
-        return res.status(400).json({ msg: 'There is no profile for this user' });
-      }
-  
+      let profile = await Profile.findOneAndUpdate(
+        { user: req.user.id },
+        { $set: profileFields },
+        { new: true, upsert: true, setDefaultsOnInsert: true }
+      );
       res.json(profile);
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server Error');
     }
-  });
+  }
+);
 
-router.delete('/', async function(req,res){
+router.get('/', async (req, res) => {
+  try {
+    const profiles = await Profile.find().populate('user', ['name', 'avatar']);
+    res.json(profiles);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+
+router.get(
+  '/user/:user_id',
+  checkObjectId('user_id'),
+  async ({ params: { user_id } }, res) => {
     try {
-        await Profile.findByIdAndRemove({user:req.user.id});
-        await User.findByIdAndRemove({_id:req.user.id});
-        res.json({msg:'Removed'});
+      const profile = await Profile.findOne({
+        user: user_id
+      }).populate('user', ['name', 'avatar']);
+
+      if (!profile) return res.status(400).json({ msg: 'Profile not found' });
+
+      return res.json(profile);
     } catch (err) {
-        console.error(err.message);
+      console.error(err.message);
+      return res.status(500).json({ msg: 'Server error' });
     }
+  }
+);
+
+
+router.delete('/', VerifyToken, async (req, res) => {
+  try {
+    // Remove user posts
+    await Post.deleteMany({ user: req.user.id });
+    // Remove profile
+    await Profile.findOneAndRemove({ user: req.user.id });
+    // Remove user
+    await User.findOneAndRemove({ _id: req.user.id });
+
+    res.json({ msg: 'User deleted' });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
 });
 
 function VerifyToken(req,res,next){
-    const token = req.header('x-auth-token');
-
-    if(!token){
-        return res.status(401).json({msg: 'Token missing. Login authorization denied.'});
-    }
-
-    try {
-       const decoded = jwt.verify(token, config.get('tokensecret'));
-
-       req.user = decoded.user;
-       next();
-    } catch (error) {
-        res.status(401).json({msg: 'Invalid token'});
-    }
+  const token = req.header('x-auth-token');
+    
+  if (!token) {
+    return res.status(401).json({ msg: 'No token, authorization denied' });
+  }
+    
+  try {
+    jwt.verify(token, config.get('tokensecret'), (error, decoded) => {
+      if (error) {
+        return res.status(401).json({ msg: 'Token is not valid' });
+      } else {
+        req.user = decoded.user;
+        next();
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ msg: 'Server Error' });
+  }
 }
 
 module.exports = router;

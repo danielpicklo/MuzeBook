@@ -13,12 +13,9 @@ export default function(state = initState, action){
     switch(type){
         case GET_PROFILE:
             return {...state, profile:payload, loading:false};
-            break;
         case PROFILE_ERROR:
             return {...state, error:payload, loading:false}
-            break;
         default:
             return state;
-            break;
     }
 }

@@ -16,7 +16,7 @@ export const Register = ({setAlert, register, isAuthenticated}) => {
         confirmpassword:''
     });
 
-    const {name, email, password, confirmpassword, username} = formData;
+    const {name, email, password, confirmpassword} = formData;
     const onChange = e => setFormData({...formData, [e.target.name]:e.target.value});
     const onSubmit = async e => {
         e.preventDefault();
