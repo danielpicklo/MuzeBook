@@ -7,19 +7,22 @@ import { Redirect } from 'react-router-dom';
 export const Login = ({login, isAuthenticated}) => {
 
     const [formData, setFormData] = useState({
-        email:'',
-        password:''
+        email: '',
+        password: ''
     });
-
+    
     const { email, password } = formData;
-    const onChange = e => setFormData({...formData, [e.target.name]:e.target.value});
-    const onSubmit = async e => {
+    
+    const onChange = e =>
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    
+    const onSubmit = e => {
         e.preventDefault();
         login(email, password);
     };
-
-    if(isAuthenticated){
-        return <Redirect to="/posts" />
+    
+    if (isAuthenticated) {
+        return <Redirect to="/profile" />;
     }
 
     return (
@@ -42,10 +45,10 @@ export const Login = ({login, isAuthenticated}) => {
 Login.propTypes = {
     login: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool
-}
-
+};
+  
 const mapStateToProps = state => ({
     isAuthenticated: state.auth.isAuthenticated
 });
-
-export default connect(mapStateToProps, {login})(Login);
+  
+export default connect(mapStateToProps, { login })(Login);
