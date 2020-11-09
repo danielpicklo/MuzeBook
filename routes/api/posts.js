@@ -113,9 +113,11 @@ router.put('/unlove/:id', VerifyToken, async function(req,res){
 });
 
 router.post('/comment/:id/', [ VerifyToken, [
-    check('text', 'Text is required to comment.').not().isEmpty()
-]], async function(req,res) {
+        check('text', 'Text is required to comment.').not().isEmpty()
+    ]], async function(req,res){
+
     const err = validationResult(req);
+    
     if(!err.isEmpty()){
         return res.status(400).json({error: err.array()});
     }
