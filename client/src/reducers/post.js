@@ -1,23 +1,61 @@
-import {GET_POSTS, POST_ERROR, ADD_POST} from '../actions/constants';
+import {
+	GET_POSTS,
+	POST_ERROR,
+	ADD_POST,
+	UPDATE_POST,
+	ADD_COMMENT,
+	REMOVE_COMMENT,
+} from "../actions/constants";
 
 const initState = {
-    posts: [],
-    post: null,
-    loading: true,
-    error:{}
-}
+	posts: [],
+	post: null,
+	loading: true,
+	error: {},
+};
 
-export default function(state = initState, action){
-    const {type, payload} = action;
+export default function (state = initState, action) {
+	const { type, payload } = action;
 
-    switch(type){
-        case GET_POSTS:
-            return {...state, posts:payload, loading:false};
-        case ADD_POST:
-            return {...state, posts:[payload, ...state.posts], loading:false};
-        case POST_ERROR:
-            return {...state, error:payload, loading:false};
-        default:
-            return state;
-    }
+	switch (type) {
+		case GET_POSTS:
+			return { ...state, posts: payload, loading: false };
+		case ADD_POST:
+			return {
+				...state,
+				posts: [payload, ...state.posts],
+				loading: false,
+			};
+		case POST_ERROR:
+			return { ...state, error: payload, loading: false };
+		case UPDATE_POST:
+			return {
+				...state,
+				posts: state.posts.map((post) =>
+					post._id === payload.id
+						? { ...post, loves: payload.loves }
+						: post
+				),
+				loading: false,
+			};
+		case ADD_COMMENT:
+			return {
+				...state,
+				post: { ...state.post, comments: payload },
+				loading: false,
+			};
+		case REMOVE_COMMENT:
+			return {
+				...state,
+				post: {
+					...state.post,
+					comments: state.post.comments.filter(
+						(comment) => comment._id !== payload
+					),
+				},
+				loading: false,
+			};
+		default:
+			return state;
+	}
 }

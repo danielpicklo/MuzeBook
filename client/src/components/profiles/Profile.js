@@ -5,12 +5,7 @@ import { connect } from "react-redux";
 import { getProfileById } from "../../actions/profile";
 import ProfileAbout from "./ProfileAbout";
 
-const Profile = ({
-	getProfileById,
-	profile: { profile, loading },
-	auth,
-	match,
-}) => {
+const Profile = ({ getProfileById, profile: { profile, loading } }) => {
 	/*useEffect(() => {
 		getProfileById(match.params.id);
 	}, [getProfileById, match.params.id]);*/
