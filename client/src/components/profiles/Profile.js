@@ -5,18 +5,17 @@ import { connect } from "react-redux";
 import { getProfileById } from "../../actions/profile";
 import ProfileAbout from "./ProfileAbout";
 
-const Profile = ({ getProfileById, profile: { profile, loading } }) => {
+const Profile = ({ getProfileById, profile: { profile }, auth, match }) => {
 	/*useEffect(() => {
 		getProfileById(match.params.id);
 	}, [getProfileById, match.params.id]);*/
-
 	return (
 		<Fragment>
 			{profile === null ? (
 				<Fragment></Fragment>
 			) : (
 				<Fragment>
-					<div className="">
+					<div className="profile">
 						<ProfileAbout profile={profile} />
 					</div>
 				</Fragment>

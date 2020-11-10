@@ -12,19 +12,21 @@ const Dash = ({ getCurrentProfile, auth: { user }, profile: { profile } }) => {
 
 	return (
 		<Fragment>
-			{profile !== null ? (
-				<Fragment>
-					<Profile />
-				</Fragment>
-			) : (
-				<Fragment>
-					<h1>{user && user.name}</h1>
-					<p>Do you want to set up your profile?</p>
-					<Link to="/create-profile">
-						<button>Create Profile</button>
-					</Link>
-				</Fragment>
-			)}
+			<div className="container">
+				{profile !== null ? (
+					<Fragment>
+						<Profile />
+					</Fragment>
+				) : (
+					<Fragment>
+						<h1>{user && user.name}</h1>
+						<p>Do you want to set up your profile?</p>
+						<Link to="/create-profile">
+							<button>Create Profile</button>
+						</Link>
+					</Fragment>
+				)}
+			</div>
 		</Fragment>
 	);
 };

@@ -26,7 +26,7 @@ export const Login = ({ login, isAuthenticated }) => {
 
 	return (
 		<Fragment>
-			<div>
+			<div className="container">
 				<h1 className="centered">Welcome to MuzeBook</h1>
 				<h3 className="centered">
 					Please sign up to continue to the community
