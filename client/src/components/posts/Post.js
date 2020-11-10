@@ -37,6 +37,9 @@ const Post = ({
 					<button type="button" onClick={() => removeLove(_id)}>
 						<i className="fas fa-thumbs-down" />
 					</button>
+					<button>
+						Comments <span>{comments.length}</span>
+					</button>
 				</div>
 				<div className="date">
 					<p>
@@ -44,9 +47,6 @@ const Post = ({
 					</p>
 				</div>
 				{!auth.loading && user === auth.user._id && <button>X</button>}
-				<div className="comments">
-					<CommentForm postId={post._id} />
-				</div>
 			</div>
 		</Fragment>
 	);
