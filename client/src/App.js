@@ -43,7 +43,7 @@ const App = () => {
 						<Route exact path="/register" component={Register} />
 						<Route exact path="/posts/:id" component={Post} />
 						<Private exact path="/profile" component={Dash} />
-						<Private exact path="/posts" component={Posts} />
+						<Route exact path="/posts" component={Posts} />
 						<Private
 							exact
 							path="/create-profile"

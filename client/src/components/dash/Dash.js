@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { getCurrentProfile } from "../../actions/profile";
 import { connect } from "react-redux";
-import Profile from "../profiles/Profile";
 
 const Dash = ({ getCurrentProfile, auth: { user }, profile: { profile } }) => {
 	useEffect(() => {
@@ -12,10 +11,11 @@ const Dash = ({ getCurrentProfile, auth: { user }, profile: { profile } }) => {
 
 	return (
 		<Fragment>
-			<div className="containerr">
+			<div className="container">
 				{profile !== null ? (
 					<Fragment>
-						<Profile />
+						<i className="fas fa-user" /> Welcome{" "}
+						{user && user.name}
 					</Fragment>
 				) : (
 					<Fragment>

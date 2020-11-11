@@ -4,7 +4,6 @@ import Post from "./Post";
 import { connect } from "react-redux";
 import { getPosts } from "../../actions/post";
 import Form from "./Form";
-import Profile from "../profiles/Profile";
 
 const Posts = ({ getPosts, post: { posts, loading } }) => {
 	useEffect(() => {
@@ -22,9 +21,6 @@ const Posts = ({ getPosts, post: { posts, loading } }) => {
 						))}
 					</div>
 				</div>
-			</div>
-			<div className="profile-sidebar">
-				<Profile />
 			</div>
 		</Fragment>
 	);
