@@ -12,7 +12,7 @@ const Dash = ({ getCurrentProfile, auth: { user }, profile: { profile } }) => {
 
 	return (
 		<Fragment>
-			<div className="container">
+			<div className="containerr">
 				{profile !== null ? (
 					<Fragment>
 						<Profile />
