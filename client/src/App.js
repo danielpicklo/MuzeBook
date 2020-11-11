@@ -6,6 +6,7 @@ import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 import CreateProfile from "./components/profile-forms/CreateProfile";
 import Posts from "./components/posts/Posts";
+import Post from "./components/posts/Post";
 import Alert from "./components/layout/Alert";
 import Dash from "./components/dash/Dash";
 import Profile from "./components/profiles/Profile";
@@ -40,6 +41,7 @@ const App = () => {
 						<Route exact path="/login" component={Login} />
 						<Route exact path="/profile/:id" component={Profile} />
 						<Route exact path="/register" component={Register} />
+						<Route exact path="/posts/:id" component={Post} />
 						<Private exact path="/profile" component={Dash} />
 						<Private exact path="/posts" component={Posts} />
 						<Private

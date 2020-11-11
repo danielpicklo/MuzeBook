@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 import Moment from "react-moment";
 import { connect } from "react-redux";
 import { addLove, removeLove } from "../../actions/post";
-import { post } from "request";
-import CommentForm from "../post/CommentForm";
 
 const Post = ({
 	addLove,
 	removeLove,
 	auth,
 	post: { _id, text, name, avatar, user, loves, comments, date },
+	hideActions,
 }) => {
 	return (
 		<Fragment>
@@ -27,20 +26,28 @@ const Post = ({
 				<div className="post-content">
 					<p>"{text}"</p>
 				</div>
-				<div className="inputs">
-					<button type="button" onClick={() => addLove(_id)}>
-						<i className="fas fa-thumbs-up" />{" "}
-						<span>
-							<span>{loves.length}</span>
-						</span>
-					</button>
-					<button type="button" onClick={() => removeLove(_id)}>
-						<i className="fas fa-thumbs-down" />
-					</button>
-					<button>
-						Comments <span>{comments.length}</span>
-					</button>
-				</div>
+
+				{hideActions && (
+					<Fragment>
+						<div className="inputs">
+							<button type="button" onClick={() => addLove(_id)}>
+								<i className="fas fa-thumbs-up" />{" "}
+								<span>
+									<span>{loves.length}</span>
+								</span>
+							</button>
+							<button
+								type="button"
+								onClick={() => removeLove(_id)}
+							>
+								<i className="fas fa-thumbs-down" />
+							</button>
+							<Link to={`/posts/${_id}`}>
+								Comments <span>{comments.length}</span>
+							</Link>
+						</div>
+					</Fragment>
+				)}
 				<div className="date">
 					<p>
 						Shared <Moment format="MM/DD/YYYY">{date}</Moment>
@@ -50,6 +57,10 @@ const Post = ({
 			</div>
 		</Fragment>
 	);
+};
+
+Post.defaultProps = {
+	hideActions: true,
 };
 
 Post.propTypes = {

@@ -11,7 +11,6 @@ import {
 	CLR_PROFILE,
 } from "./constants";
 
-// Load User
 export const loadUser = () => async (dispatch) => {
 	try {
 		const res = await axios.get("/api/auth");
@@ -27,7 +26,6 @@ export const loadUser = () => async (dispatch) => {
 	}
 };
 
-// Register User
 export const register = (formData) => async (dispatch) => {
 	try {
 		const res = await axios.post("/api/users", formData);
@@ -50,7 +48,6 @@ export const register = (formData) => async (dispatch) => {
 	}
 };
 
-// Login User
 export const login = (email, password) => async (dispatch) => {
 	const body = { email, password };
 
