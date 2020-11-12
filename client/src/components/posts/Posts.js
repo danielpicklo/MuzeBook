@@ -4,6 +4,7 @@ import Post from "./Post";
 import { connect } from "react-redux";
 import { getPosts } from "../../actions/post";
 import Form from "./Form";
+import PostSidebar from "../profiles/ProfileSidebar";
 
 const Posts = ({ getPosts, post: { posts, loading } }) => {
 	useEffect(() => {
@@ -20,6 +21,9 @@ const Posts = ({ getPosts, post: { posts, loading } }) => {
 							<Post key={post._id} post={post} />
 						))}
 					</div>
+				</div>
+				<div className="profile-sidebar">
+					<PostSidebar />
 				</div>
 			</div>
 		</Fragment>

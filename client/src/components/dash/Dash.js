@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { getCurrentProfile } from "../../actions/profile";
 import { connect } from "react-redux";
+import ProfileDashboard from "../profiles/ProfileDashboard";
 
 const Dash = ({ getCurrentProfile, auth: { user }, profile: { profile } }) => {
 	useEffect(() => {
@@ -14,8 +15,7 @@ const Dash = ({ getCurrentProfile, auth: { user }, profile: { profile } }) => {
 			<div className="container">
 				{profile !== null ? (
 					<Fragment>
-						<i className="fas fa-user" /> Welcome{" "}
-						{user && user.name}
+						<ProfileDashboard />
 					</Fragment>
 				) : (
 					<Fragment>
