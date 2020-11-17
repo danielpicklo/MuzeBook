@@ -13,18 +13,15 @@ const Posts = ({ getPosts, post: { posts, loading } }) => {
 
 	return (
 		<Fragment>
-			<div>
-				<div className="wrapper">
-					<Form />
-					<div className="post-container">
-						{posts.map((post) => (
-							<Post key={post._id} post={post} />
-						))}
-					</div>
-				</div>
-				<div className="profile-sidebar">
-					<PostSidebar />
-				</div>
+			<div className="container">
+				<Form />
+
+				{posts.map((post) => (
+					<Post key={post._id} post={post} />
+				))}
+			</div>
+			<div className="profile-sidebar">
+				<PostSidebar />
 			</div>
 		</Fragment>
 	);

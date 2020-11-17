@@ -15,45 +15,37 @@ const Post = ({
 	return (
 		<Fragment>
 			<div className="post">
-				<Link to={`/profile/${user}`}>
-					<img
-						className="profile-image"
-						src={avatar}
-						alt="profile-img"
-					/>
-				</Link>
-				<h4>{name}</h4>
+				<div className="user-header">
+					<Link to={`/profile/${user}`}>
+						<img
+							className="profile-image"
+							src={avatar}
+							alt="profile-img"
+						/>
+						<h4>{name}</h4>
+					</Link>
+				</div>
 				<div className="post-content">
 					<p>"{text}"</p>
 				</div>
 
-				{hideActions && (
-					<Fragment>
-						<div className="inputs">
-							<button type="button" onClick={() => addLove(_id)}>
-								<i className="fas fa-thumbs-up" />{" "}
-								<span>
-									<span>{loves.length}</span>
-								</span>
-							</button>
-							<button
-								type="button"
-								onClick={() => removeLove(_id)}
-							>
-								<i className="fas fa-thumbs-down" />
-							</button>
-							<Link to={`/posts/${_id}`}>
-								Comments <span>{comments.length}</span>
-							</Link>
-						</div>
-					</Fragment>
-				)}
+				<div className="inputs">
+					<button type="button" onClick={() => addLove(_id)}>
+						<i className="fas fa-heart" />{" "}
+						<span>
+							<span>{loves.length}</span>
+						</span>
+					</button>
+					<button type="button" onClick={() => removeLove(_id)}>
+						<i className="fas fa-heart-broken" />
+					</button>
+				</div>
+
 				<div className="date">
 					<p>
 						Shared <Moment format="MM/DD/YYYY">{date}</Moment>
 					</p>
 				</div>
-				{!auth.loading && user === auth.user._id && <button>X</button>}
 			</div>
 		</Fragment>
 	);

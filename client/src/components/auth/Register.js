@@ -53,43 +53,45 @@ export const Register = ({ setAlert, register, isAuthenticated }) => {
 
 	return (
 		<Fragment>
-			<div className="container">
-				<h1 className="centered">Welcome to MuzeBook</h1>
-				<h3 className="centered">
-					Please sign up to continue to the community
-				</h3>
-				<div className="form">
-					<form onSubmit={(e) => onSubmit(e)}>
-						<input
-							type="text"
-							name="name"
-							placeholder="Name"
-							value={name}
-							onChange={(e) => onChange(e)}
-						/>
-						<input
-							type="email"
-							name="email"
-							placeholder="Email Address"
-							value={email}
-							onChange={(e) => onChange(e)}
-						/>
-						<input
-							type="password"
-							name="password"
-							placeholder="Password"
-							value={password}
-							onChange={(e) => onChange(e)}
-						/>
-						<input
-							type="password"
-							name="confirmpassword"
-							placeholder="Confirm Password"
-							value={confirmpassword}
-							onChange={(e) => onChange(e)}
-						/>
-						<input type="submit" value="Register" />
-					</form>
+			<div className="backdrop">
+				<div className="container">
+					<h1 className="centered">Welcome to MuzeBook</h1>
+					<h3 className="centered">
+						Please sign up to continue to the community
+					</h3>
+					<div className="form">
+						<form onSubmit={(e) => onSubmit(e)}>
+							<input
+								type="text"
+								name="name"
+								placeholder="Name"
+								value={name}
+								onChange={(e) => onChange(e)}
+							/>
+							<input
+								type="email"
+								name="email"
+								placeholder="Email Address"
+								value={email}
+								onChange={(e) => onChange(e)}
+							/>
+							<input
+								type="password"
+								name="password"
+								placeholder="Password"
+								value={password}
+								onChange={(e) => onChange(e)}
+							/>
+							<input
+								type="password"
+								name="confirmpassword"
+								placeholder="Confirm Password"
+								value={confirmpassword}
+								onChange={(e) => onChange(e)}
+							/>
+							<input type="submit" value="Register" />
+						</form>
+					</div>
 				</div>
 			</div>
 		</Fragment>

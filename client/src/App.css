@@ -3,7 +3,10 @@ body {
 	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
 		sans-serif;
 	color: #202020;
-	/*background: url("https://danpicklo.files.wordpress.com/2020/11/5925e1459589f92598c1f906a5a79397.jpg");*/
+}
+
+.backdrop {
+	background: url("https://danpicklo.files.wordpress.com/2020/11/5925e1459589f92598c1f906a5a79397.jpg");
 	background-size: cover;
 }
 
@@ -31,6 +34,7 @@ a:hover {
 	clear: both;
 	margin: 0 auto;
 	min-height: 71vh;
+	padding-top: 200px;
 }
 
 .container-head {
@@ -50,13 +54,15 @@ a:hover {
 }
 
 .navbar {
+	position: fixed;
+	top: 0;
+	width: 100%;
 	background-color: #fff;
 	margin: 0;
 	padding: 0;
 	min-height: 150px;
 	box-shadow: 0px 7px 17px 0px rgba(0, 0, 0, 0.55);
 	z-index: 9999;
-	position: relative;
 	border-bottom: 5px solid #ed213a;
 }
 
@@ -140,14 +146,20 @@ a:hover {
 	margin-bottom: 15px;
 	width: 100%;
 	height: 100px;
+	font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
+		sans-serif;
+	letter-spacing: 1px;
 }
 
 .post {
 	width: 70%;
 	clear: both;
-	margin: 10px auto;
-	padding: 5px;
+	margin: 20px auto;
+	padding: 0 0 25px;
 	background: #efefef;
+	box-shadow: 0 0 13px 8px rgba(0, 0, 0, 0.05);
+	border-radius: 10px;
+	border: 0px solid;
 }
 
 .post .profile-image {
@@ -159,17 +171,21 @@ a:hover {
 	width: 90%;
 	float: left;
 	margin: 0px 0px 30px 10px;
+	font-size: 20px;
 }
 
 .post .post-content {
-	width: 100%;
+	width: 95%;
 	float: left;
+	padding: 20px 10px 10px 10px;
+	font-size: 20px;
 }
 
 .post .date p {
 	font-size: 10px;
-	width: 100%;
+	float: right;
 	margin: 0 auto;
+	padding: 10px;
 	clear: both;
 	color: rgba(0, 0, 0, 0.55);
 }
@@ -180,17 +196,32 @@ a:hover {
 	margin: 0 auto;
 }
 
+.post .user-header {
+	background-color: #d4d4d4;
+	border-bottom: 1px solid;
+	padding: 10px 5px;
+	height: 46px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+}
+
+.post .user-header a {
+	color: #000;
+}
+
 .centered {
 	text-align: center;
 }
 
 .alert {
-	width: 70%;
+	width: 50%;
 	padding: 10px;
-	margin: 10px auto;
+	margin: 0px auto 10px;
 	transition: 0.5s linear;
 	color: #fff;
 	font-weight: bold;
+	position: relative;
+	top: 200px;
 }
 
 .alert-danger {
@@ -208,4 +239,21 @@ a:hover {
 	background: #fff;
 	text-align: center;
 	max-width: 20%;
+}
+
+.inputs {
+	min-height: 35px;
+	display: inline-block;
+}
+
+.inputs button {
+	transition: 0.1s linear;
+	border: 0px;
+	cursor: pointer;
+}
+
+.inputs button:hover {
+	font-size: 20px;
+	transition: 0.1s linear;
+	color: #ed213a;
 }

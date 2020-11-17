@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { getProfileById } from "../../actions/profile";
 import ProfileAbout from "./ProfileAbout";
@@ -11,15 +10,17 @@ const Profile = ({ getProfileById, profile: { profile }, auth, match }) => {
 	}, [getProfileById, match.params.id]);
 	return (
 		<Fragment>
-			{profile === null ? (
-				<Fragment></Fragment>
-			) : (
-				<Fragment>
-					<div className="profile">
-						<ProfileAbout profile={profile} />
-					</div>
-				</Fragment>
-			)}
+			<div className="container">
+				{profile === null ? (
+					<Fragment></Fragment>
+				) : (
+					<Fragment>
+						<div className="profile">
+							<ProfileAbout profile={profile} />
+						</div>
+					</Fragment>
+				)}
+			</div>
 		</Fragment>
 	);
 };

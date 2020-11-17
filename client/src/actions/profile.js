@@ -77,7 +77,7 @@ export const createProfile = (formData, history, edit = false) => async (
 			payload: res.data,
 		});
 
-		history.push("/dashboard");
+		history.push("/posts");
 	} catch (err) {
 		const errors = err.response.data.errors;
 

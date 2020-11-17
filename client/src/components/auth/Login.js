@@ -27,9 +27,9 @@ export const Login = ({ login, isAuthenticated }) => {
 	return (
 		<Fragment>
 			<div className="container">
-				<h1 className="centered">Welcome to MuzeBook</h1>
+				<h1 className="centered">Welcome Back to MuzeBook</h1>
 				<h3 className="centered">
-					Please sign up to continue to the community
+					Please sign in to pick up where you left off!
 				</h3>
 				<div className="form">
 					<form onSubmit={(e) => onSubmit(e)}>
