@@ -9,7 +9,7 @@ const Post = ({
 	addLove,
 	removeLove,
 	auth,
-	post: { _id, text, name, avatar, user, loves, comments, date },
+	post: { _id, text, name, avatar, user, loves, comments, date, uri },
 	hideActions,
 }) => {
 	return (
@@ -27,6 +27,18 @@ const Post = ({
 				</div>
 				<div className="post-content">
 					<p>"{text}"</p>
+					{uri == null ? (
+						<div></div>
+					) : (
+						<iframe
+							src={`https://open.spotify.com/embed/track/${uri}`}
+							width="300"
+							height="380"
+							frameborder="0"
+							allowtransparency="true"
+							allow="encrypted-media"
+						></iframe>
+					)}
 				</div>
 
 				<div className="inputs">

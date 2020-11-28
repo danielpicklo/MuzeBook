@@ -5,6 +5,7 @@ import { addPost } from "../../actions/post";
 
 const Form = ({ addPost }) => {
 	const [text, setText] = useState("");
+	const [uri, setURI] = useState("");
 
 	return (
 		<div className="form">
@@ -12,7 +13,8 @@ const Form = ({ addPost }) => {
 			<form
 				onSubmit={(e) => {
 					e.preventDefault();
-					addPost({ text });
+					addPost({ text, uri });
+					setURI("");
 					setText("");
 				}}
 			>
@@ -25,6 +27,13 @@ const Form = ({ addPost }) => {
 					onChange={(e) => setText(e.target.value)}
 					required
 				></textarea>
+				<input
+					name="part"
+					type="text"
+					placeholder="Spotify URI"
+					value={uri}
+					onChange={(f) => setURI(f.target.value)}
+				/>
 				<button>Share</button>
 			</form>
 			<hr />
