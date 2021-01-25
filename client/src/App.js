@@ -23,7 +23,7 @@ import { light, dark, GlobalStyles } from "./Theme";
 const StyledApp = styled.div``;
 
 const App = () => {
-	const [theme, setTheme] = useState("light");
+	const [theme, setTheme] = useState("dark");
 	const themeToggle = () => {
 		theme === "light" ? setTheme("dark") : setTheme("light");
 	};
@@ -70,7 +70,10 @@ const App = () => {
 							/>
 						</Switch>
 						<div className="footer">
-							<button onClick={() => themeToggle()}>
+							<button
+								className="centered"
+								onClick={() => themeToggle()}
+							>
 								Change Theme to{" "}
 								{theme === "light" ? "Dark" : "Light"}
 							</button>
