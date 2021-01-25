@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Landing from "./components/layout/Landing";
@@ -17,8 +17,17 @@ import store from "./store";
 import { loadUser } from "./actions/auth";
 import { LOGOUT_USER } from "./actions/constants";
 import setAuthToken from "./utils/setAuthToken";
+import styled, { ThemeProvider } from "styled-components";
+import { light, dark, GlobalStyles } from "./Theme";
+
+const StyledApp = styled.div``;
 
 const App = () => {
+	const [theme, setTheme] = useState("light");
+	const themeToggle = () => {
+		theme === "light" ? setTheme("dark") : setTheme("light");
+	};
+
 	useEffect(() => {
 		if (localStorage.token) {
 			setAuthToken(localStorage.token);
@@ -31,29 +40,45 @@ const App = () => {
 	}, []);
 
 	return (
-		<Provider store={store}>
-			<Router>
-				<Fragment>
-					<Navbar />
-					<Alert />
-					<Switch>
-						<Route exact path="/" component={Landing} />
-						<Route exact path="/login" component={Login} />
-						<Route exact path="/profile/:id" component={Profile} />
-						<Route exact path="/register" component={Register} />
-						<Route exact path="/posts/:id" component={Post} />
-						<Private exact path="/profile" component={Dash} />
-						<Route exact path="/posts" component={Posts} />
-						<Private
-							exact
-							path="/create-profile"
-							component={CreateProfile}
-						/>
-					</Switch>
-					<div className="footer"></div>
-				</Fragment>
-			</Router>
-		</Provider>
+		<ThemeProvider theme={theme === "light" ? light : dark}>
+			<GlobalStyles />
+			<Provider store={store}>
+				<Router>
+					<Fragment>
+						<Navbar />
+						<Alert />
+						<Switch>
+							<Route exact path="/" component={Landing} />
+							<Route exact path="/login" component={Login} />
+							<Route
+								exact
+								path="/profile/:id"
+								component={Profile}
+							/>
+							<Route
+								exact
+								path="/register"
+								component={Register}
+							/>
+							<Route exact path="/posts/:id" component={Post} />
+							<Private exact path="/profile" component={Dash} />
+							<Route exact path="/posts" component={Posts} />
+							<Private
+								exact
+								path="/create-profile"
+								component={CreateProfile}
+							/>
+						</Switch>
+						<div className="footer">
+							<button onClick={() => themeToggle()}>
+								Change Theme to{" "}
+								{theme === "light" ? "Dark" : "Light"}
+							</button>
+						</div>
+					</Fragment>
+				</Router>
+			</Provider>
+		</ThemeProvider>
 	);
 };
 
